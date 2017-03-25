@@ -274,7 +274,7 @@
      <string>Pause Midi</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -282,9 +282,6 @@
       <width>351</width>
       <height>151</height>
      </rect>
-    </property>
-    <property name="title">
-     <string>GroupBox</string>
     </property>
    </widget>
   </widget>

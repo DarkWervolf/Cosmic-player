@@ -17,9 +17,10 @@ public:
     enum states {STOPPED, PLAYING, PAUSED};
     int state;
     void stop();
-    void pause();
     void setMidiFile(QMidiFile* file);
     int number;
+private slots:
+    void pause();
 private:
     QMidiFile* midi_file;
     QMidiOut* midi_out;

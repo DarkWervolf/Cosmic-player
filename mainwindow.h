@@ -7,6 +7,8 @@
 #include <QMediaPlaylist>
 #include <QMediaPlayerControl>
 
+class MidiPlayer;
+
 namespace Ui {
 class MainWindow;
 }

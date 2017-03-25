@@ -21,23 +21,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     audioPlayer = new QMediaPlayer;
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(moveAudioSlider(qint64)));
-    connect(ui->fileSlider, SIGNAL(valueChanged(int)), this, SLOT(setPositionAudio(int)));
+    connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionAudio(int)));
+    connect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionAudio(int)));
 
     playlist = new QMediaPlaylist;
 
     midi_out = new QMidiOut();
     midi_out->connect(QMidiOut::devices().firstKey());
     midiPlayer = new MidiPlayer(midi_out);
+    //connect(midiPlayer, SIGNAL(finished()), midiPlayer, SLOT(deleteLater()));
     connect(midiPlayer, SIGNAL(eventChanged(int)), this, SLOT(moveMidiSlider(int)));
 }
 
 MainWindow::~MainWindow()
 {
-    delete midiPlayer;
     delete audioPlayer;
     delete ui;
-    delete midi_out;
-    delete midiFile;
     delete playlist;
 }
 
@@ -81,7 +80,8 @@ void MainWindow::playAudio()
     stopMidi();
     if(!audioFilename.isEmpty()){
         audioPlayer->setPlaylist(playlist);
-        audioPlayer->setMedia(QUrl::fromLocalFile(audioFilename));
+        playlist->setCurrentIndex(1);
+        audioPlayer->setPlaylist(playlist);
         audioPlayer->play();
     }
 }
@@ -120,21 +120,25 @@ void MainWindow::setPositionAudio(int pos)
 void MainWindow::pauseMidi()
 {
     if (midiPlayer->state == PLAYING){
-        midiPlayer->pause();
-        evNumber = midiPlayer->number;
         state = PAUSED;
-        midiPlayer->stop();
-        //delete midiPlayer;
-        //delete midi_out;
+        evNumber = midiPlayer->eventNumber;
+        midiPlayer->pause();
     }
     else if(state == PAUSED){
+        state = PLAYING;
+        midiPlayer->state = PLAYING;
+        /*
             qDebug() << "working";
-            //midi_out = new QMidiOut();
-            //midi_out->connect(QMidiOut::devices().firstKey());
-            //idiPlayer = new MidiPlayer(midi_out);
-            //midiFile->load(midiFilename);
-            //midiPlayer->setMidiFile(midiFile);
+            midi_out = new QMidiOut();
+            midi_out->connect(QMidiOut::devices().firstKey());
+            midiPlayer = new MidiPlayer(midi_out);
+            connect(midiPlayer, SIGNAL(eventChanged(int)), this, SLOT(moveMidiSlider(int)));
+            midiFile = new QMidiFile;
+            midiFile->load(midiFilename);
+            midiPlayer->setMidiFile(midiFile);
             midiPlayer->number = evNumber;
             midiPlayer->start();
+            state = PLAYING;
+            */
     }
 }

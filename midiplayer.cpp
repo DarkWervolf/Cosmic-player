@@ -21,22 +21,21 @@ void MidiPlayer::run()
     QElapsedTimer t;
     t.start();
     QList<QMidiEvent*> events = midi_file->events();
-    eventNumber = 0;
+    eventNumber = number;
     state = PLAYING;
     qDebug() << eventNumber;
+    bool paused = false;
     for (int i = eventNumber; i < events.size() ; i++){
         QMidiEvent* e = events[i];
-        if (state != PLAYING) {
-            break;
-        }
-        if(number != 0){
-            eventNumber = number;
+        while (state != PLAYING) {
+            paused = true;
+            msleep(500);
         }
         if (e->type() != QMidiEvent::Meta) {
             qint64 event_time = midi_file->timeFromTick(e->tick()) * 1000;
 
             qint32 waitTime = event_time - t.elapsed();
-            if (waitTime > 0) {
+            if (waitTime > 0 && !paused) {
                 msleep(waitTime);
             }
             if (e->type() == QMidiEvent::SysEx) {
@@ -47,9 +46,9 @@ void MidiPlayer::run()
                 emit eventChanged(++eventNumber);
             }
         }
+        paused = false;
     }
     
-    number = 0;
     midi_out->disconnect();
     delete midi_file;
 }
@@ -62,8 +61,9 @@ void MidiPlayer::stop()
 
 void MidiPlayer::pause()
 {
-        number = eventNumber;
+        //number = eventNumber;
         state = PAUSED;
+
 }
 
 void MidiPlayer::setMidiFile(QMidiFile* file)

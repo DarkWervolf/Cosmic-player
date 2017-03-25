@@ -7,6 +7,9 @@
 QT       += core gui
 QT += multimedia
 
+QT += core gui multimedia
+QT += multimediawidgets
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,4 +29,6 @@ include(qmidi/QMidi.pri)
 
 RESOURCES += \
     resourses.qrc
+
+DISTFILES +=
 
