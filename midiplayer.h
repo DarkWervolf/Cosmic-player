@@ -17,6 +17,7 @@ public:
     enum states {STOPPED, PLAYING, PAUSED};
     int state;
     void stop();
+    void setPosition(int pos);
     void setMidiFile(QMidiFile* file);
     int number;
 private slots:

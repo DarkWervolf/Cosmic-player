@@ -5,6 +5,7 @@
 #include <QMediaPlaylist>
 #include <QMediaPlayerControl>
 #include <QDebug>
+#include <QFont>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow), midiPlayer(0), check(0), paused(false), pos(0), state(STOPPED), evNumber(0)
@@ -31,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     midiPlayer = new MidiPlayer(midi_out);
     //connect(midiPlayer, SIGNAL(finished()), midiPlayer, SLOT(deleteLater()));
     connect(midiPlayer, SIGNAL(eventChanged(int)), this, SLOT(moveMidiSlider(int)));
+    connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionMidi(int)));
+    connect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionMidi(int)));
+
 }
 
 MainWindow::~MainWindow()
@@ -117,16 +121,23 @@ void MainWindow::setPositionAudio(int pos)
     audioPlayer->setPosition(pos);
 }
 
+void MainWindow::setPositionMidi(int pos)
+{
+    midiPlayer->setPosition(pos);
+}
+
 void MainWindow::pauseMidi()
 {
     if (midiPlayer->state == PLAYING){
         state = PAUSED;
+        midiPlayer->state = PAUSED;
         evNumber = midiPlayer->eventNumber;
         midiPlayer->pause();
     }
     else if(state == PAUSED){
         state = PLAYING;
         midiPlayer->state = PLAYING;
+        //midiPlayer->number = evNumber;
         /*
             qDebug() << "working";
             midi_out = new QMidiOut();
