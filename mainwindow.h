@@ -51,6 +51,7 @@ private:
     bool paused;
     qint64 sizeSong;
     qint64 pos;
+    bool checkPosition;
 };
 
 #endif // MAINWINDOW_H

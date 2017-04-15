@@ -19,13 +19,12 @@ public:
     void stop();
     void setPosition(int pos);
     void setMidiFile(QMidiFile* file);
-    int number;
 private slots:
     void pause();
 private:
+    int evNumber;
     QMidiFile* midi_file;
     QMidiOut* midi_out;
-    int eventNumber;
 protected:
     void run();
 signals:

@@ -8,8 +8,9 @@
 #include <QFont>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), midiPlayer(0), check(0), paused(false), pos(0), state(STOPPED), evNumber(0)
+    QMainWindow(parent), ui(new Ui::MainWindow), midiPlayer(0), check(0), paused(false), checkPosition(false), pos(0), state(STOPPED), evNumber(0)
 {
+    //midiFilename = "D:/cpp/Midi-master/build-Midi-Desktop_Qt_5_5_1_MinGW_32bit-Debug/MeinHerzBrennt.mid";
     ui->setupUi(this);
     connect(ui->openMidiButton, SIGNAL(clicked(bool)), this, SLOT(openMidiFileDialog()));
     connect(ui->playMidiButton, SIGNAL(clicked(bool)), this, SLOT(playMidi()));
@@ -32,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     midiPlayer = new MidiPlayer(midi_out);
     //connect(midiPlayer, SIGNAL(finished()), midiPlayer, SLOT(deleteLater()));
     connect(midiPlayer, SIGNAL(eventChanged(int)), this, SLOT(moveMidiSlider(int)));
-    connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionMidi(int)));
+    //connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionMidi(int)));
     connect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionMidi(int)));
 
 }
@@ -53,15 +54,20 @@ void MainWindow::openMidiFileDialog()
 void MainWindow::playMidi()
 {
     stopAudio();
-    stopMidi();
+    //stopMidi();
     if (!midiFilename.isEmpty()) {
         midiFile = new QMidiFile;
         midiFile->load(midiFilename);
-        ui->fileSlider->setMaximum(midiFile->events().size());
+        qDebug() << midiFile->events().count();
+        ui->fileSlider->setRange(0, midiFile->events().count());
+        ui->fileSlider->setPageStep(1);
+        ui->fileSlider->setTickInterval(midiFile->events().count() / 50);
+        ui->fileSlider->setTickPosition(QSlider::TicksBelow);
         ui->fileSlider->setValue(0);
         midiPlayer->setMidiFile(midiFile);
         midiPlayer->start();
    }
+   // midiPlayer->setPosition(5000);
 }
 
 void MainWindow::stopMidi()
@@ -107,7 +113,13 @@ void MainWindow::pauseAudio()
 
 void MainWindow::moveMidiSlider(int value)
 {
-    ui->fileSlider->setValue(value);
+    qDebug() << "moveSlider() " <<  value;
+    if(checkPosition == true){
+        return;
+    }
+    else{
+        ui->fileSlider->setValue(value);
+    }
 }
 
 void MainWindow::moveAudioSlider(qint64 value)
@@ -123,15 +135,18 @@ void MainWindow::setPositionAudio(int pos)
 
 void MainWindow::setPositionMidi(int pos)
 {
+    qDebug() << "setPosMidi() " << pos;
+    checkPosition = true;
     midiPlayer->setPosition(pos);
+    checkPosition = false;
 }
 
 void MainWindow::pauseMidi()
 {
     if (midiPlayer->state == PLAYING){
         state = PAUSED;
+        midi_out->stopAll();
         midiPlayer->state = PAUSED;
-        evNumber = midiPlayer->eventNumber;
         midiPlayer->pause();
     }
     else if(state == PAUSED){

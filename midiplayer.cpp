@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QDateTime>
 
-MidiPlayer::MidiPlayer(QMidiOut* out) : midi_file(0), midi_out(out), state(STOPPED), eventNumber(0), number(0)
+MidiPlayer::MidiPlayer(QMidiOut* out) : midi_file(0), midi_out(out), state(STOPPED), evNumber(100)
 {
 }
 MidiPlayer::~MidiPlayer()
@@ -22,14 +22,14 @@ void MidiPlayer::run()
     QElapsedTimer t;
     t.start();
     QList<QMidiEvent*> events = midi_file->events();
-    eventNumber = number;
     state = PLAYING;
-    qDebug() << eventNumber;
+    qDebug() << evNumber;
     bool paused = false;
     qint64 posTimer = 0;
     qint64 pauseTime = 0;
-    for (int i = eventNumber; i < events.size() ; i++){
-        QMidiEvent* e = events[i];
+    for (; evNumber < events.size(); evNumber++){
+        qDebug() << "evNum" << evNumber << state << events.size();
+        QMidiEvent* e = events[evNumber];
         if (state != PLAYING) {
             paused = true;
             posTimer = t.elapsed();
@@ -43,7 +43,6 @@ void MidiPlayer::run()
             posTimer = t.elapsed();
         }
         if (e->type() != QMidiEvent::Meta) {
-            qDebug() << i;
             qint64 event_time = midi_file->timeFromTick(e->tick()) * 1000;
 
             qint32 waitTime = event_time - (posTimer + pauseTime);
@@ -55,7 +54,7 @@ void MidiPlayer::run()
             } else {
                 qint32 message = e->message();
                 midi_out->sendMsg(message);
-                emit eventChanged(++eventNumber);
+                emit eventChanged(evNumber);
             }
         }
         paused = false;
@@ -67,23 +66,20 @@ void MidiPlayer::run()
 
 void MidiPlayer::stop()
 {
+    midi_out->stopAll();
     state = STOPPED;
-    number = 0;
+    //evNumber = 0;
 }
 
 void MidiPlayer::setPosition(int pos)
 {
-    state = PAUSED;
-    number = pos;
-    eventNumber = pos;
-    state = PLAYING;
+    qDebug() << "setPosition() " << pos;
+    evNumber = pos;
 }
 
 void MidiPlayer::pause()
 {
-        //number = eventNumber;
-        state = PAUSED;
-
+    state = PAUSED;
 }
 
 void MidiPlayer::setMidiFile(QMidiFile* file)
