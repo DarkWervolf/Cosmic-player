@@ -14,7 +14,7 @@ class MidiPlayer : public QThread
 public:
     MidiPlayer(QMidiOut* out);
     ~MidiPlayer();
-    enum states {STOPPED, PLAYING, PAUSED};
+    enum states {STOPPED, PLAYING, PAUSED, SETPOS};
     int state;
     void stop();
     void setPosition(int pos);
@@ -23,6 +23,7 @@ private slots:
     void pause();
 private:
     int evNumber;
+    qint64 pauseTime;
     QMidiFile* midi_file;
     QMidiOut* midi_out;
 protected:

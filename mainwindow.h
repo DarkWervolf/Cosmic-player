@@ -33,7 +33,7 @@ public slots:
     void moveMidiSlider(int value);
     void moveAudioSlider(qint64 value);
     void setPositionAudio(int pos);
-    void setPositionMidi(int pos);
+    void setPositionMidi();
 
 private:
     int state;

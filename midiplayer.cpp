@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QDateTime>
 
-MidiPlayer::MidiPlayer(QMidiOut* out) : midi_file(0), midi_out(out), state(STOPPED), evNumber(100)
+MidiPlayer::MidiPlayer(QMidiOut* out) : midi_file(0), midi_out(out), state(STOPPED), evNumber(0), pauseTime(0)
 {
 }
 MidiPlayer::~MidiPlayer()
@@ -30,11 +30,11 @@ void MidiPlayer::run()
     for (; evNumber < events.size(); evNumber++){
         qDebug() << "evNum" << evNumber << state << events.size();
         QMidiEvent* e = events[evNumber];
-        if (state != PLAYING) {
+        if (state == PAUSED) {
             paused = true;
             posTimer = t.elapsed();
             pauseTime += posTimer;
-            while (state != PLAYING) {
+            while (state == PAUSED) {
                 msleep(500);
             }
             t.restart();
@@ -45,8 +45,18 @@ void MidiPlayer::run()
         if (e->type() != QMidiEvent::Meta) {
             qint64 event_time = midi_file->timeFromTick(e->tick()) * 1000;
 
-            qint32 waitTime = event_time - (posTimer + pauseTime);
+            qint32 waitTime = 0;
+           if(state == SETPOS){
+               waitTime = event_time - (posTimer + pauseTime);
+               qDebug() << event_time;
+               state = PLAYING;
+               //t.restart();
+            }
+           else{
+                waitTime = event_time - (posTimer + pauseTime);
+           }
             if (waitTime > 0 && !paused) {
+                qDebug() << "sleep";
                 msleep(waitTime);
             }
             if (e->type() == QMidiEvent::SysEx) {
@@ -68,13 +78,13 @@ void MidiPlayer::stop()
 {
     midi_out->stopAll();
     state = STOPPED;
-    //evNumber = 0;
 }
 
 void MidiPlayer::setPosition(int pos)
 {
     qDebug() << "setPosition() " << pos;
     evNumber = pos;
+    state = SETPOS;
 }
 
 void MidiPlayer::pause()

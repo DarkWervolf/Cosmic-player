@@ -23,8 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     audioPlayer = new QMediaPlayer;
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(moveAudioSlider(qint64)));
-    connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionAudio(int)));
-    connect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionAudio(int)));
 
     playlist = new QMediaPlaylist;
 
@@ -33,8 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     midiPlayer = new MidiPlayer(midi_out);
     //connect(midiPlayer, SIGNAL(finished()), midiPlayer, SLOT(deleteLater()));
     connect(midiPlayer, SIGNAL(eventChanged(int)), this, SLOT(moveMidiSlider(int)));
-    //connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionMidi(int)));
-    connect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionMidi(int)));
+
 
 }
 
@@ -56,6 +53,11 @@ void MainWindow::playMidi()
     stopAudio();
     //stopMidi();
     if (!midiFilename.isEmpty()) {
+       // connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionMidi(int)));
+        connect(ui->fileSlider, SIGNAL(sliderReleased()), this, SLOT(setPositionMidi()));
+        disconnect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionAudio(int)));
+        disconnect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionAudio(int)));
+
         midiFile = new QMidiFile;
         midiFile->load(midiFilename);
         qDebug() << midiFile->events().count();
@@ -67,7 +69,6 @@ void MainWindow::playMidi()
         midiPlayer->setMidiFile(midiFile);
         midiPlayer->start();
    }
-   // midiPlayer->setPosition(5000);
 }
 
 void MainWindow::stopMidi()
@@ -89,6 +90,9 @@ void MainWindow::playAudio()
     stopAudio();
     stopMidi();
     if(!audioFilename.isEmpty()){
+        connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionAudio(int)));
+        connect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionAudio(int)));
+
         audioPlayer->setPlaylist(playlist);
         playlist->setCurrentIndex(1);
         audioPlayer->setPlaylist(playlist);
@@ -113,7 +117,7 @@ void MainWindow::pauseAudio()
 
 void MainWindow::moveMidiSlider(int value)
 {
-    qDebug() << "moveSlider() " <<  value;
+    //qDebug() << "moveSlider() " <<  value;
     if(checkPosition == true){
         return;
     }
@@ -133,12 +137,16 @@ void MainWindow::setPositionAudio(int pos)
     audioPlayer->setPosition(pos);
 }
 
-void MainWindow::setPositionMidi(int pos)
+void MainWindow::setPositionMidi()
 {
+    int pos = ui->fileSlider->value();
     qDebug() << "setPosMidi() " << pos;
     checkPosition = true;
-    midiPlayer->setPosition(pos);
+    qint64 p = pos;
+    qDebug() << "p" << " " << p;
+    midiPlayer->setPosition(p);
     checkPosition = false;
+    //ui->fileSlider->setMaximum(midiFile->events().count());
 }
 
 void MainWindow::pauseMidi()
