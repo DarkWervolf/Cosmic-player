@@ -47,10 +47,12 @@ void MidiPlayer::run()
 
             qint32 waitTime = 0;
            if(state == SETPOS){
+               qDebug() << "evNumber" << evNumber;
+               pauseTime = (evNumber * 100) - posTimer;
+               qDebug() << "PauseTime" << pauseTime;
                waitTime = event_time - (posTimer + pauseTime);
                qDebug() << event_time;
                state = PLAYING;
-               //t.restart();
             }
            else{
                 waitTime = event_time - (posTimer + pauseTime);
@@ -76,13 +78,13 @@ void MidiPlayer::run()
 
 void MidiPlayer::stop()
 {
-    midi_out->stopAll();
     state = STOPPED;
+    midi_out->stopAll();
+    midi_out->disconnect();
 }
 
 void MidiPlayer::setPosition(int pos)
 {
-    qDebug() << "setPosition() " << pos;
     evNumber = pos;
     state = SETPOS;
 }

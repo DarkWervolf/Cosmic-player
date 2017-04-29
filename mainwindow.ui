@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>377</width>
-    <height>325</height>
+    <width>372</width>
+    <height>324</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -272,16 +272,6 @@
     </property>
     <property name="text">
      <string>Pause Midi</string>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="listWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>351</width>
-      <height>151</height>
-     </rect>
     </property>
    </widget>
   </widget>
