@@ -5,10 +5,10 @@ int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
     MainWindow mw;
-    mw.setMinimumHeight(325);
-    mw.setMaximumHeight(325);
-    mw.setMinimumWidth(374);
-    mw.setMaximumWidth(374);
+    mw.setMinimumHeight(160);
+    mw.setMaximumHeight(160);
+    mw.setMinimumWidth(238);
+    mw.setMaximumWidth(238);
     mw.show();
     return a.exec();
 }

@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>18.jpg</file>
         <file>C:/Documents and Settings/romsuhov/Мои документы/Загрузки/9639.ttf</file>
+        <file>../pause.png</file>
+        <file>../play.png</file>
+        <file>../stop.png</file>
     </qresource>
 </RCC>

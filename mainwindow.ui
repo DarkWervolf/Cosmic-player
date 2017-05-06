@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>372</width>
-    <height>324</height>
+    <width>238</width>
+    <height>160</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,6 +37,9 @@
     <normalon>G:/18.png</normalon>
    </iconset>
   </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
@@ -60,8 +63,8 @@
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>200</y>
-      <width>75</width>
+      <y>50</y>
+      <width>31</width>
       <height>23</height>
      </rect>
     </property>
@@ -72,18 +75,20 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+border-image: url(:/play.png);
+border-position: center;</string>
     </property>
     <property name="text">
-     <string>Play Midi</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLineEdit" name="filenameEdit">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>170</y>
-      <width>351</width>
+      <y>10</y>
+      <width>221</width>
       <height>22</height>
      </rect>
     </property>
@@ -98,7 +103,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>200</y>
+      <y>50</y>
       <width>80</width>
       <height>22</height>
      </rect>
@@ -121,8 +126,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>290</y>
-      <width>351</width>
+      <y>130</y>
+      <width>221</width>
       <height>20</height>
      </rect>
     </property>
@@ -146,7 +151,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>240</y>
+      <y>90</y>
       <width>81</width>
       <height>23</height>
      </rect>
@@ -168,8 +173,8 @@
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>240</y>
-      <width>75</width>
+      <y>90</y>
+      <width>31</width>
       <height>23</height>
      </rect>
     </property>
@@ -180,18 +185,19 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+border-image: url(:/play.png);</string>
     </property>
     <property name="text">
-     <string>Play Audio</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="stopButton">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>240</y>
-      <width>75</width>
+      <x>160</x>
+      <y>90</y>
+      <width>31</width>
       <height>23</height>
      </rect>
     </property>
@@ -202,18 +208,19 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+border-image: url(:/stop.png);</string>
     </property>
     <property name="text">
-     <string>Stop Audio</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="pauseAudioButton">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>240</y>
-      <width>75</width>
+      <x>200</x>
+      <y>90</y>
+      <width>31</width>
       <height>23</height>
      </rect>
     </property>
@@ -224,18 +231,19 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+border-image: url(:/pause.png);</string>
     </property>
     <property name="text">
-     <string>Pause Audio</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="stopMidiButton">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>200</y>
-      <width>75</width>
+      <x>160</x>
+      <y>50</y>
+      <width>31</width>
       <height>23</height>
      </rect>
     </property>
@@ -243,21 +251,25 @@
      <font>
       <family>Alice in Wonderland</family>
       <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+border-image: url(:/stop.png);
+border-position: center;</string>
     </property>
     <property name="text">
-     <string>Stop Midi</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="pauseMidiButton">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>200</y>
-      <width>75</width>
+      <x>200</x>
+      <y>50</y>
+      <width>31</width>
       <height>23</height>
      </rect>
     </property>
@@ -268,10 +280,12 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+border-image: url(:/pause.png);
+border-position: center;</string>
     </property>
     <property name="text">
-     <string>Pause Midi</string>
+     <string/>
     </property>
    </widget>
   </widget>
