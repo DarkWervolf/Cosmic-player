@@ -19,15 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pauseAudioButton, SIGNAL(clicked(bool)), this, SLOT(pauseAudio()));
     connect(ui->pauseMidiButton, SIGNAL(clicked(bool)), this, SLOT(pauseMidi()));
     connect(ui->stopMidiButton, SIGNAL(clicked(bool)), this, SLOT(stopMidi()));
-
-    audioPlayer = new QMediaPlayer;
-    connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(moveAudioSlider(qint64)));
-
     playlist = new QMediaPlaylist;
-
-
-
-
+    audioPlayer = new QMediaPlayer;
 }
 
 MainWindow::~MainWindow()
@@ -45,12 +38,16 @@ void MainWindow::openMidiFileDialog()
 
 void MainWindow::playMidi()
 {
-    stopAudio();
-    //stopMidi();
-    midi_out = new QMidiOut();
-    midi_out->connect(QMidiOut::devices().firstKey());
-    midiPlayer = new MidiPlayer(midi_out);
+    if (!audioPlayer && !midiPlayer) {
+        stopAudio();
+        stopMidi();
+        return;
+    }
     if (!midiFilename.isEmpty()) {
+        midi_out = new QMidiOut();
+        midi_out->connect(QMidiOut::devices().firstKey());
+        midiPlayer = new MidiPlayer(midi_out);
+
         connect(ui->fileSlider, SIGNAL(sliderReleased()), this, SLOT(setPositionMidi()));
         disconnect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionAudio(int)));
         disconnect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionAudio(int)));
@@ -77,13 +74,14 @@ void MainWindow::stopMidi()
     if (!midiPlayer) {
         return;
     }
-   // midiPlayer->state = STOPPED;
-    midiPlayer->stop();
-    ui->fileSlider->setValue(0);
-    midi_out->disconnect();
-    delete midi_out;
-    disconnect(ui->fileSlider, SIGNAL(sliderReleased()), this, SLOT(setPositionMidi()));
-    midiPlayer->terminate();
+    else{
+        midiPlayer->stop();
+        ui->fileSlider->setValue(0);
+        midi_out->disconnect();
+        delete midi_out;
+        disconnect(ui->fileSlider, SIGNAL(sliderReleased()), this, SLOT(setPositionMidi()));
+        midiPlayer->terminate();
+    }
 }
 
 void MainWindow::openAudioFileDialog()
@@ -95,9 +93,13 @@ void MainWindow::openAudioFileDialog()
 
 void MainWindow::playAudio()
 {
-    stopAudio();
-    stopMidi();
+    if (!audioPlayer && !midiPlayer) {
+        stopAudio();
+        stopMidi();
+        return;
+    }
     if(!audioFilename.isEmpty()){
+        connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(moveAudioSlider(qint64)));
         disconnect(ui->fileSlider, SIGNAL(sliderReleased()), this, SLOT(setPositionMidi()));
         connect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionAudio(int)));
         connect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionAudio(int)));
@@ -111,10 +113,12 @@ void MainWindow::playAudio()
 
 void MainWindow::stopAudio()
 {
-    if (!audioPlayer) {
+    if (!audioPlayer && !midiPlayer) {
         return;
     }
-    audioPlayer->stop();
+    else{
+        audioPlayer->stop();
+    }
 }
 
 void MainWindow::pauseAudio()
