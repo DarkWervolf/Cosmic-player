@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>238</width>
-    <height>160</height>
+    <width>242</width>
+    <height>158</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -75,9 +75,8 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-border-image: url(:/play.png);
-border-position: center;</string>
+     <string notr="true">border-image: url(:/play2.png);
+background: transparent;</string>
     </property>
     <property name="text">
      <string/>
@@ -89,11 +88,12 @@ border-position: center;</string>
       <x>10</x>
       <y>10</y>
       <width>221</width>
-      <height>22</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+background: transparent;</string>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -105,7 +105,7 @@ border-position: center;</string>
       <x>10</x>
       <y>50</y>
       <width>80</width>
-      <height>22</height>
+      <height>23</height>
      </rect>
     </property>
     <property name="font">
@@ -138,7 +138,8 @@ border-position: center;</string>
      </sizepolicy>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+     <string notr="true">color: rgb(255, 255, 255);
+background: transparent;</string>
     </property>
     <property name="maximum">
      <number>99</number>
@@ -152,7 +153,7 @@ border-position: center;</string>
      <rect>
       <x>10</x>
       <y>90</y>
-      <width>81</width>
+      <width>80</width>
       <height>23</height>
      </rect>
     </property>
@@ -186,7 +187,8 @@ border-position: center;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-border-image: url(:/play.png);</string>
+border-image: url(:/play2.png);
+background: transparent;</string>
     </property>
     <property name="text">
      <string/>
@@ -209,7 +211,8 @@ border-image: url(:/play.png);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-border-image: url(:/stop.png);</string>
+border-image: url(:/stop2.png);
+background: transparent;</string>
     </property>
     <property name="text">
      <string/>
@@ -230,12 +233,19 @@ border-image: url(:/stop.png);</string>
       <pointsize>16</pointsize>
      </font>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-border-image: url(:/pause.png);</string>
+border-image: url(:/pause2.png);
+background: transparent;</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="stopMidiButton">
@@ -257,8 +267,9 @@ border-image: url(:/pause.png);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-border-image: url(:/stop.png);
-border-position: center;</string>
+border-image: url(:/stop2.png);
+border-position: center;
+background: transparent;</string>
     </property>
     <property name="text">
      <string/>
@@ -280,8 +291,8 @@ border-position: center;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-border-image: url(:/pause.png);
+     <string notr="true">background: transparent;
+border-image: url(:/pause2.png);
 border-position: center;</string>
     </property>
     <property name="text">
