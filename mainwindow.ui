@@ -44,7 +44,8 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image: url(:/18.jpg);</string>
+   <string notr="true">background-image: url(:/18.jpg);
+</string>
   </property>
   <property name="documentMode">
    <bool>false</bool>
@@ -65,7 +66,7 @@
       <x>110</x>
       <y>50</y>
       <width>31</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -88,7 +89,7 @@ background: transparent;</string>
       <x>10</x>
       <y>10</y>
       <width>221</width>
-      <height>20</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -105,7 +106,7 @@ background: transparent;</string>
       <x>10</x>
       <y>50</y>
       <width>80</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -128,7 +129,7 @@ background: transparent;</string>
       <x>10</x>
       <y>130</y>
       <width>221</width>
-      <height>20</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -154,7 +155,7 @@ background: transparent;</string>
       <x>10</x>
       <y>90</y>
       <width>80</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -176,7 +177,7 @@ background: transparent;</string>
       <x>110</x>
       <y>90</y>
       <width>31</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -200,7 +201,7 @@ background: transparent;</string>
       <x>160</x>
       <y>90</y>
       <width>31</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -224,7 +225,7 @@ background: transparent;</string>
       <x>200</x>
       <y>90</y>
       <width>31</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -254,7 +255,7 @@ background: transparent;</string>
       <x>160</x>
       <y>50</y>
       <width>31</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -281,7 +282,7 @@ background: transparent;</string>
       <x>200</x>
       <y>50</y>
       <width>31</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
