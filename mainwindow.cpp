@@ -26,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     playlist = new QMediaPlaylist;
 
 
-    connect(midiPlayer, SIGNAL(eventChanged(int)), this, SLOT(moveMidiSlider(int)));
 
 
 }
@@ -55,6 +54,7 @@ void MainWindow::playMidi()
         connect(ui->fileSlider, SIGNAL(sliderReleased()), this, SLOT(setPositionMidi()));
         disconnect(ui->fileSlider, SIGNAL(sliderPressed()), this, SLOT(setPositionAudio(int)));
         disconnect(ui->fileSlider, SIGNAL(sliderMoved(int)), this, SLOT(setPositionAudio(int)));
+        connect(midiPlayer, SIGNAL(eventChanged(int)), this, SLOT(moveMidiSlider(int)));
 
         midiFile = new QMidiFile;
         midiFile->load(midiFilename);
@@ -74,6 +74,9 @@ void MainWindow::playMidi()
 
 void MainWindow::stopMidi()
 {
+    if (!midiPlayer) {
+        return;
+    }
    // midiPlayer->state = STOPPED;
     midiPlayer->stop();
     ui->fileSlider->setValue(0);
@@ -108,11 +111,17 @@ void MainWindow::playAudio()
 
 void MainWindow::stopAudio()
 {
+    if (!audioPlayer) {
+        return;
+    }
     audioPlayer->stop();
 }
 
 void MainWindow::pauseAudio()
 {
+    if (!audioPlayer) {
+        return;
+    }
     if (audioPlayer->state() == QMediaPlayer::PlayingState){
         audioPlayer->pause();
     }
@@ -148,6 +157,9 @@ void MainWindow::setPositionMidi()
 
 void MainWindow::pauseMidi()
 {
+    if (!midiPlayer) {
+        return;
+    }
     if (midiPlayer->state == PLAYING){
         state = PAUSED;
         midi_out->stopAll();

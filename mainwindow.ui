@@ -186,6 +186,9 @@ background: transparent;</string>
       <pointsize>16</pointsize>
      </font>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
 border-image: url(:/play2.png);
@@ -269,7 +272,6 @@ background: transparent;</string>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
 border-image: url(:/stop2.png);
-border-position: center;
 background: transparent;</string>
     </property>
     <property name="text">
